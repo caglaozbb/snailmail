@@ -1,0 +1,14 @@
+@import './base.css';
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('./base.png');
+  background-repeat: no-repeat;
+  -webkit-app-region: drag;
+  background-size: cover;
+  user-select: none;
+}
