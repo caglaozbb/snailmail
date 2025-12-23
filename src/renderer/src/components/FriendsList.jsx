@@ -1,8 +1,10 @@
+import styles from './FriendsList.module.css';
+
 export default function FriendsList() {
     return (
-        <div className="friends-list">
-            <div className="friends-list-header">
-                <div className="friends-list-header-title">
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <div className={styles.title}>
                     <h1>Friends List</h1>
                 </div>
             </div>
