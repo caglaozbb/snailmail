@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .header {
@@ -44,6 +44,7 @@
   font-size: 32px;
   font-weight: regular;
   margin: 0;
+  padding-top: 5px;
   color: var(--color-primary);
 }
 
@@ -54,6 +55,7 @@
   justify-content: center;
   margin-right: 15px;
   gap: 8px;
+  -webkit-app-region: no-drag; /* Ensure buttons are clickable */
 }
 
 .button {

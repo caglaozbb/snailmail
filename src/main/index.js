@@ -61,6 +61,19 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
+  // Window controls
+  ipcMain.on('window-minimize', (event) => {
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    if (win) win.minimize()
+  })
+
+  ipcMain.on('window-close', (event) => {
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    if (win) win.close()
+  })
+
   createWindow()
 
   app.on('activate', function () {

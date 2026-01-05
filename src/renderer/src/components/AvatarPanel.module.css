@@ -1,0 +1,33 @@
+.container {   
+    width: 178px;
+    height: 452px;
+    /* background: red; */
+
+    box-sizing: border-box;
+    display: flex;
+    justify-content:space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.topSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 14px;
+    padding-right: 15px;
+}  
+.bottomSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-right: 15px;
+}  
+.avatar {
+    width: 130px;
+    height: 130px;
+}  

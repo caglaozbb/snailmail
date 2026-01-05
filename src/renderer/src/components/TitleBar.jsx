@@ -4,6 +4,14 @@ import closeIcon from '../assets/close.png';
 import styles from './TitleBar.module.css';
 
 export default function TitleBar() {
+    const handleMinimize = () => {
+        window.api.minimize();
+    };
+
+    const handleClose = () => {
+        window.api.close();
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -16,10 +24,10 @@ export default function TitleBar() {
                     </div>
                 </div>
                 <div className={styles.buttons}>
-                    <button className={styles.button}>
+                    <button className={styles.button} onClick={handleMinimize}>
                         <img className={styles.iconMinimize} src={minimizeIcon} alt="Minimize" />
                     </button>
-                    <button className={styles.button}>
+                    <button className={styles.button} onClick={handleClose}>
                         <img className={styles.iconClose} src={closeIcon} alt="Close" />
                     </button>
                 </div>

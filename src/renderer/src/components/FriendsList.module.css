@@ -1,0 +1,130 @@
+.container {
+    width: 178px;
+    height: 452px;
+    background: var(--color-panel);
+    border-right: 4px solid var(--color-border);
+    border-bottom: 4px solid var(--color-border);
+    border-left: 4px solid var(--color-bg);
+    border-top: 4px solid var(--color-bg);
+    margin-left: 15px;
+    padding: 8px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+  
+/* USER PROFILE */
+.profileSection {
+    padding-bottom: 8px;
+    margin-bottom: 2px;
+}
+
+.header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    image-rendering: pixelated;
+    border-bottom: 2px solid var(--color-border);
+    border-right: 2px solid var(--color-border);
+    border-top: 2px solid var(--color-bg);
+    border-left: 2px solid var(--color-bg);
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.username {
+    font-size: 26px;
+    color: var(--color-primary);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.statusContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0px;
+}
+
+.statusIcon {
+    width: 8px;
+    height: 8px;
+    background: var(--color-online);
+}
+
+.statusText {
+    font-size: 14px;
+    color: var(--color-primary);
+}
+
+.bio {
+    font-size: 14px;
+    color: var(--color-primary);
+    margin-left: 5px;
+    line-height: 1.4;
+    text-align: left;
+}
+
+/* FRIENDS */
+.friendsSection {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.title {
+    font-size: 14px;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    margin-bottom: 0;
+    margin-left: 5px;
+    margin-top: 0;
+}
+
+.friend {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 6px 4px;
+}
+
+.friend:hover {
+    background: var(--color-hover);
+}
+
+.friendAvatar {
+    width: 33px;
+    height: 33px;
+}
+
+.friendName {
+    font-size: 16px;
+    color: var(--color-primary);
+}
+
+.online,
+.offline {
+    width: 9px;
+    height: 9px;
+}
+
+.online {
+    background: var(--color-online);
+}
+
+.offline {
+    background: var(--color-offline);
+}

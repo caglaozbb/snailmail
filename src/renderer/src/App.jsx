@@ -1,4 +1,3 @@
-import Versions from './components/Versions'
 import TitleBar from "./components/TitleBar";
 import FriendsList from "./components/FriendsList";
 import ChatWindows from "./components/ChatWindows";
