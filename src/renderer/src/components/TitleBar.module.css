@@ -55,7 +55,7 @@
   justify-content: center;
   margin-right: 15px;
   gap: 8px;
-  -webkit-app-region: no-drag; /* Ensure buttons are clickable */
+  -webkit-app-region: no-drag; 
 }
 
 .button {

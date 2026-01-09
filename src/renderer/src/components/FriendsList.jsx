@@ -1,7 +1,7 @@
 import styles from './FriendsList.module.css';
-import { getAvatar } from '../utils/avatars';
+import { getAvatar, DEFAULT_AVATAR } from '../utils/avatars';
 
-export default function FriendsList({ user, onlineUsers = [] }) {
+export default function FriendsList({ user, onlineUsers = [], selectedFriend, onSelectFriend }) {
     
     return (
             <div className={styles.container}>
@@ -9,7 +9,7 @@ export default function FriendsList({ user, onlineUsers = [] }) {
               <div className={styles.profileSection}>
                 <div className={styles.header}>
                     <img
-                    src={user ? getAvatar(user.avatarId) : getAvatar('bubi')}
+                    src={user ? getAvatar(user.avatarId) : getAvatar(DEFAULT_AVATAR)}
                     alt="user avatar"
                     className={styles.avatar}
                     />
@@ -35,7 +35,11 @@ export default function FriendsList({ user, onlineUsers = [] }) {
                 </h2>
         
                 {onlineUsers.map((friend) => (
-                  <div key={friend.id} className={styles.friend}>
+                  <div 
+                    key={friend.id} 
+                    className={`${styles.friend} ${selectedFriend?.id === friend.id ? styles.selected : ''}`}
+                    onClick={() => onSelectFriend(friend)}
+                  >
                     <img
                       src={getAvatar(friend.avatarId)}
                       alt={friend.name}

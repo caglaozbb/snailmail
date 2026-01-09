@@ -1,56 +1,39 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 import styles from './ChatWindows.module.css';
-import { socket } from '../socket';
 
-export default function ChatWindows() {
-    const [messages, setMessages] = useState([]);
+export default function ChatWindows({ selectedFriend, messages = [], onSendMessage }) {
     const [inputValue, setInputValue] = useState('');
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const messagesEndRef = useRef(null);
+    const emojiPickerRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     useEffect(() => {
-        console.log("Sohbet bileşeni yüklendi, sokete bağlanılıyor...");
-        socket.connect();
+        scrollToBottom();
+    }, [messages]);
 
-        function onConnect() {
-            console.log("✅ Sunucuya bağlanıldı! Socket ID:", socket.id);
-        }
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+                setShowEmojiPicker(false);
+            }
+        };
 
-        function onDisconnect() {
-            console.log("❌ Sunucu bağlantısı koptu.");
-        }
-
-        function onConnectError(err) {
-            console.error("⚠️ Bağlantı hatası:", err.message);
-        }
-
-        function onMessage(value) {
-            console.log("📩 Yeni mesaj alındı:", value);
-            setMessages(prev => [...prev, { text: value, sender: "other" }]);
-        }
-
-        socket.on('connect', onConnect);
-        socket.on('disconnect', onDisconnect);
-        socket.on('connect_error', onConnectError);
-        socket.on('message', onMessage);
-
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            console.log("Bileşeni kapatılıyor, bağlantı kesiliyor...");
-            socket.off('connect', onConnect);
-            socket.off('disconnect', onDisconnect);
-            socket.off('connect_error', onConnectError);
-            socket.off('message', onMessage);
-            socket.disconnect();
+            document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
 
     const handleSend = () => {
-        if (inputValue.trim()) {
-            console.log("📤 Mesaj gönderiliyor:", inputValue);
-            const newMessage = { text: inputValue, sender: "me" };
-            setMessages(prev => [...prev, newMessage]); 
-            
-            socket.emit('message', inputValue);
-            
+        if (inputValue.trim() && selectedFriend) {
+            onSendMessage(inputValue);
             setInputValue('');
+            setShowEmojiPicker(false);
         }
     };
 
@@ -61,10 +44,24 @@ export default function ChatWindows() {
         }
     };
 
+    const onEmojiClick = (emojiObject) => {
+        setInputValue(prev => prev + emojiObject.emoji);
+    };
+
+    if (!selectedFriend) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.emptyState}>
+                    <p>Select a friend to start chatting</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.chatWindow}>
-                <div className={styles.chatHeader}>To: ribbit</div>
+                <div className={styles.chatHeader}>To: {selectedFriend.name}</div>
                 <div className={styles.chatBody}>
                     {messages.map((msg, index) => (
                         <div 
@@ -74,17 +71,37 @@ export default function ChatWindows() {
                             {msg.text}
                         </div>
                     ))}
+                    <div ref={messagesEndRef} />
                 </div>
             </div>
             <div className={styles.messageInputContainer}>
+                {showEmojiPicker && (
+                    <div className={styles.emojiPickerContainer} ref={emojiPickerRef}>
+                        <EmojiPicker 
+                            onEmojiClick={onEmojiClick} 
+                            width={300} 
+                            height={400}
+                        />
+                    </div>
+                )}
                 <textarea 
                     className={styles.messageInput} 
                     placeholder="Type here..." 
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
+                    autoFocus
                 />
-                <button className={styles.sendButton} onClick={handleSend}>Send</button>
+                <div className={styles.inputToolbar}>
+                    <button 
+                        className={styles.emojiButton} 
+                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                        title="Add emoji"
+                    >
+                        😊
+                    </button>
+                    <button className={styles.sendButton} onClick={handleSend}>Send</button>
+                </div>
             </div>
         </div>
     )

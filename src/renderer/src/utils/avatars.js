@@ -1,25 +1,22 @@
 // Import avatars
-import bubi from '../assets/avatars/bubi.png';
-import froggo from '../assets/avatars/froggo.png';
-import hoppu from '../assets/avatars/hoppu.png';
-import mochi from '../assets/avatars/mochi.png';
-import ribbit from '../assets/avatars/ribbit.png';
-import tomato from '../assets/avatars/tomato.png';
-import bubbiChat from '../assets/avatars/bubbiChat.png';
-import ribbitChat from '../assets/avatars/ribbitChat.png';
+import avatarBlue from '../assets/avatars/avatar-blue.png';
+import avatarGreen from '../assets/avatars/avatar-green.png';
+import avatarOrange from '../assets/avatars/avatar-orange.png';
+import avatarPurple from '../assets/avatars/avatar-purple.png';
+import avatarRed from '../assets/avatars/avatar-red.png';
+import avatarWhite from '../assets/avatars/avatar-white.png';
 
 export const AVATARS = {
-  bubi: bubi,
-  froggo: froggo,
-  hoppu: hoppu,
-  mochi: mochi,
-  ribbit: ribbit,
-  tomato: tomato,
-  bubbiChat: bubbiChat,
-  ribbitChat: ribbitChat
+  blue: avatarBlue,
+  green: avatarGreen,
+  orange: avatarOrange,
+  purple: avatarPurple,
+  red: avatarRed,
+  white: avatarWhite,
 };
 
-export const LOGIN_AVATARS = ['bubi', 'hoppu', 'mochi', 'tomato'];
+export const LOGIN_AVATARS = ['blue', 'green', 'orange', 'purple', 'red', 'white'];
 
-export const getAvatar = (id) => AVATARS[id] || AVATARS['bubi'];
+export const DEFAULT_AVATAR = 'white';
 
+export const getAvatar = (id) => AVATARS[id] || AVATARS[DEFAULT_AVATAR];

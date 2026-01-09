@@ -1,5 +1,5 @@
 .container {
-    width: 200px;
+    width: 178px;
     height: 452px;
     background: var(--color-panel);
     border-right: 4px solid var(--color-border);
@@ -44,7 +44,7 @@
 }
 
 .username {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--color-primary);
     margin: 0;
     line-height: 1.2;
@@ -103,10 +103,18 @@
     align-items: center;
     gap: 17px;
     padding: 6px 4px;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: background-color 0.2s;
 }
 
 .friend:hover {
-    background: var(--color-hover);
+    background: var(--color-hover, rgba(0,0,0,0.05));
+}
+
+.selected {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--color-primary);
 }
 
 .friendAvatar {

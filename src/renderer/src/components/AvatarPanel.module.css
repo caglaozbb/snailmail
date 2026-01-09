@@ -38,11 +38,29 @@
     object-fit: contain; 
 }
 
-.userName {
+.nameContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin: 10px 0 5px 0;
+}
+
+.userName {
     font-weight: bold;
     font-size: 1.1em;
-    color: var(--color-text); 
+    color: var(--color-primary); 
+    margin: 0;
+}
+
+.statusIndicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-online);
+    /* border-radius: 50%; */
+}
+
+.statusOffline {
+    background-color: var(--color-offline);
 }
 
 .userBio {

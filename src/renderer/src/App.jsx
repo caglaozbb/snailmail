@@ -10,31 +10,61 @@ import './assets/main.css'
 function App() {
   const [user, setUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [selectedFriend, setSelectedFriend] = useState(null);
+  const [messages, setMessages] = useState({}); // { [userId]: [{ text, sender: 'me'|'other' }] }
 
   useEffect(() => {
     // Socket events
     const onUsersUpdate = (users) => {
-      // Filter out self from online users list if needed, 
-      // but usually we want to see everyone or handle it in UI.
-      // For now, let's keep everyone and filter in display if needed.
       setOnlineUsers(users);
     };
 
+    const onLoginSuccess = (userData) => {
+        setUser(userData);
+    };
+
+    const onPrivateMessage = ({ from, content }) => {
+      setMessages(prev => {
+        const otherUserId = from;
+        const currentMessages = prev[otherUserId] || [];
+        return {
+          ...prev,
+          [otherUserId]: [...currentMessages, { text: content, sender: 'other' }]
+        };
+      });
+      // Optional: Auto-select friend if no chat is active?
+    };
+
     socket.on('users:update', onUsersUpdate);
+    socket.on('login:success', onLoginSuccess);
+    socket.on('private:message', onPrivateMessage);
 
     return () => {
       socket.off('users:update', onUsersUpdate);
+      socket.off('login:success', onLoginSuccess);
+      socket.off('private:message', onPrivateMessage);
     };
   }, []);
 
   const handleLogin = (userData) => {
-    setUser(userData);
-    
-    // Connect and send user data
     if (!socket.connected) {
       socket.connect();
     }
     socket.emit('user:join', userData);
+  };
+
+  const handleSendMessage = (toId, content) => {
+    if (!content.trim()) return;
+
+    setMessages(prev => {
+      const currentMessages = prev[toId] || [];
+      return {
+        ...prev,
+        [toId]: [...currentMessages, { text: content, sender: 'me' }]
+      };
+    });
+
+    socket.emit('private:message', { to: toId, content });
   };
 
   if (!user) {
@@ -46,7 +76,6 @@ function App() {
     );
   }
 
-  // Filter out current user from friends list to avoid showing self in friends list
   const friendsList = onlineUsers.filter(u => u.id !== socket.id);
 
   return (
@@ -55,9 +84,18 @@ function App() {
         <TitleBar />
 
         <div className="main">
-          <FriendsList user={user} onlineUsers={friendsList} />
-          <ChatWindows />
-          <AvatarPanel user={user} />
+          <FriendsList 
+            user={user} 
+            onlineUsers={friendsList} 
+            selectedFriend={selectedFriend}
+            onSelectFriend={setSelectedFriend}
+          />
+          <ChatWindows 
+            selectedFriend={selectedFriend}
+            messages={selectedFriend ? (messages[selectedFriend.id] || []) : []}
+            onSendMessage={(content) => handleSendMessage(selectedFriend.id, content)}
+          />
+          <AvatarPanel user={user} selectedFriend={selectedFriend} />
         </div>
       </div>
     </>

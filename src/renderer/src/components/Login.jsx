@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from './Login.module.css';
-import { LOGIN_AVATARS } from '../utils/avatars';
 
 export default function Login({ onLogin }) {
   const [name, setName] = useState('');
@@ -9,9 +8,8 @@ export default function Login({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim()) {
-      // Pick a random avatar ID
-      const randomAvatarId = LOGIN_AVATARS[Math.floor(Math.random() * LOGIN_AVATARS.length)];
-      onLogin({ name, bio, avatarId: randomAvatarId });
+      // Pass only name and bio, avatar will be assigned by serverr
+      onLogin({ name, bio });
     }
   };
 
