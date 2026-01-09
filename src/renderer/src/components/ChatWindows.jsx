@@ -3,9 +3,7 @@ import styles from './ChatWindows.module.css';
 import { socket } from '../socket';
 
 export default function ChatWindows() {
-    const [messages, setMessages] = useState([
-        { text: "Hello! How are you?", sender: "other" }
-    ]);
+    const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
@@ -13,19 +11,19 @@ export default function ChatWindows() {
         socket.connect();
 
         function onConnect() {
-            console.log(" Sunucuya bağlanıldı! Socket ID:", socket.id);
+            console.log("✅ Sunucuya bağlanıldı! Socket ID:", socket.id);
         }
 
         function onDisconnect() {
-            console.log(" Sunucu bağlantısı koptu.");
+            console.log("❌ Sunucu bağlantısı koptu.");
         }
 
         function onConnectError(err) {
-            console.error(" Bağlantı hatası:", err.message);
+            console.error("⚠️ Bağlantı hatası:", err.message);
         }
 
         function onMessage(value) {
-            console.log("Yeni mesaj alındı:", value);
+            console.log("📩 Yeni mesaj alındı:", value);
             setMessages(prev => [...prev, { text: value, sender: "other" }]);
         }
 
@@ -46,7 +44,7 @@ export default function ChatWindows() {
 
     const handleSend = () => {
         if (inputValue.trim()) {
-            console.log("Mesaj gönderiliyor:", inputValue);
+            console.log("📤 Mesaj gönderiliyor:", inputValue);
             const newMessage = { text: inputValue, sender: "me" };
             setMessages(prev => [...prev, newMessage]); 
             

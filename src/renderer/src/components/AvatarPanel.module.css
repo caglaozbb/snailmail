@@ -1,5 +1,5 @@
 .container {   
-    width: 178px;
+    width: 140px;
     height: 452px;
     /* background: red; */
 
@@ -13,21 +13,42 @@
 .topSection {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     text-align: center;
     color: var(--color-primary);
     font-size: 14px;
     padding-right: 15px;
+    padding-left: 15px; 
 }  
 .bottomSection {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 14px;
     padding-right: 15px;
+    padding-left: 15px; 
 }  
 .avatar {
     width: 130px;
-    height: 130px;
-}  
+    height: 100px;
+    object-fit: contain; 
+}
+
+.userName {
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--color-text); 
+}
+
+.userBio {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+    color: var(--color-text);
+    word-break: break-word; 
+}
