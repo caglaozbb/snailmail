@@ -1,12 +1,14 @@
 const { Server } = require("socket.io");
 
-const io = new Server(4000, {
+const PORT = process.env.PORT || 4000;
+
+const io = new Server(PORT, {
   cors: {
     origin: "*", // Tüm kaynaklardan gelen bağlantılara izin ver
   },
 });
 
-console.log("Socket.IO sunucusu 4000 portunda çalışıyor...");
+console.log(`Socket.IO sunucusu ${PORT} portunda çalışıyor...`);
 
 // Available avatars from client's utils/avatars.js
 const AVAILABLE_AVATARS = ['blue', 'green', 'orange', 'purple', 'red', 'white'];

@@ -1,0 +1,11 @@
+# This file is used to ignore files when deploying to Railway
+node_modules
+out
+build
+resources
+src
+.git
+.cursor
+electron.vite.config.mjs
+electron-builder.yml
+
