@@ -8,17 +8,17 @@ const io = new Server(PORT, {
   },
 });
 
-console.log(`Socket.IO sunucusu ${PORT} portunda çalışıyor...`);
+console.log(`Socket.IO server is running on port ${PORT}`);
 
 const AVAILABLE_AVATARS = ['blue', 'green', 'orange', 'purple', 'red', 'white'];
 
 const connectedUsers = {};
 
 io.on("connection", (socket) => {
-  console.log(`Yeni bağlantı: ${socket.id}`);
+  console.log(`New connection: ${socket.id}`);
 
   socket.on("user:join", (userData) => {
-    console.log(`Kullanıcı katılım isteği: ${userData.name} (${socket.id})`);
+    console.log(`User joined: ${userData.name} (${socket.id})`);
     
     const usedAvatars = Object.values(connectedUsers).map(u => u.avatarId);
     
@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("private:message", ({ to, content }) => {
-    console.log(`Özel mesaj (${socket.id} -> ${to}): ${content}`);
+    console.log(`Private message (${socket.id} -> ${to}): ${content}`);
     
     io.to(to).emit("private:message", {
       from: socket.id,
@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log(`Bağlantı kesildi: ${socket.id}`);
+    console.log(`disconnected: ${socket.id}`);
     
     if (connectedUsers[socket.id]) {
       delete connectedUsers[socket.id];

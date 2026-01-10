@@ -13,7 +13,7 @@ function createWindow() {
     frame: false,
     transparent: true,
     hasShadow: false,
-    skipTaskbar: true,
+    skipTaskbar: false,
     roundedCorners: false,
     // alwaysOnTop: true,
     autoHideMenuBar: true,
@@ -28,7 +28,7 @@ function createWindow() {
     mainWindow.show()
   })
 
-  mainWindow.setWindowButtonVisibility(false)
+  //  mainWindow.setWindowButtonVisibility(false)
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
